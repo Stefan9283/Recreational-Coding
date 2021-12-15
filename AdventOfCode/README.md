@@ -5,15 +5,21 @@
 	Part 2 Remains: 2
 	Not Attempted: 3
 ```
-### 2016 - 17 / 50
+### 2016 - 23 / 50
 ```
-	Solved: 8
+	Solved: 11
 	Part 2 Remains: 1
-	Not Attempted: 16
+	Not Attempted: 13
 ```
-### 2021 - 26 / 50
+### 2017 - 11 / 50
 ```
-	Solved: 13
-	Not Attempted: 12
+	Solved: 5
+	Part 2 Remains: 1
+	Not Attempted: 19
 ```
-Total stars: 85
+### 2021 - 28 / 50
+```
+	Solved: 14
+	Not Attempted: 11
+```
+Total stars: 104
