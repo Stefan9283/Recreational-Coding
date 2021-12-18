@@ -17,6 +17,7 @@ mapping = {
     'F' : '1111'
 }
 
+# for literals
 def parseType4(s: str) -> list[int]:
     num = []
     bitsRead = 6
@@ -59,22 +60,22 @@ def parsePacket(s: str):
     returned = 0
     if packetTypeID == 0: 
         returned = sum(vals)
-    if packetTypeID == 1:
+    elif packetTypeID == 1:
         returned = 1
         for e in vals:
             returned *= e
-    if packetTypeID == 2: 
+    elif packetTypeID == 2: 
         returned = min(vals)
-    if packetTypeID == 3: 
+    elif packetTypeID == 3: 
         returned = max(vals)
-    if packetTypeID == 5:
+    elif packetTypeID == 5:
         if vals[0] > vals[1]:
             returned = 1
         pass
-    if packetTypeID == 6: 
+    elif packetTypeID == 6: 
         if vals[0] < vals[1]:
             returned = 1
-    if packetTypeID == 7: 
+    elif packetTypeID == 7: 
         if vals[0] == vals[1]:
             returned = 1
 
