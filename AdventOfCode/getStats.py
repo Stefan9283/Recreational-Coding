@@ -37,6 +37,6 @@ for year in os.listdir()[:-2]:
     years[year] = days
     printYear(year)
     total_stars += int(sum(years[year]))
-f.write('Total stars: ' + str(total_stars) + '\n')    
+f.write('Total stars: ' + str(total_stars) + '/' + str(years.__len__() * 50) + '\n')    
 
     
