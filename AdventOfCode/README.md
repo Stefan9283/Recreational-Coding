@@ -29,9 +29,9 @@
 ```
 	Not Attempted: 25
 ```
-### 2021 - 38 / 50
+### 2021 - 40 / 50
 ```
-	Solved: 19
-	Not Attempted: 6
+	Solved: 20
+	Not Attempted: 5
 ```
-Total stars: 133/350
+Total stars: 135/350
