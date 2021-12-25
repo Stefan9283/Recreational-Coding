@@ -11,27 +11,29 @@
 	Part 2 Remains: 1
 	Not Attempted: 13
 ```
-### 2017 - 22 / 50
+### 2017 - 24 / 50
 ```
-	Solved: 11
-	Not Attempted: 14
+	Solved: 12
+	Not Attempted: 13
 ```
 ### 2018 - 8 / 50
 ```
 	Solved: 4
 	Not Attempted: 21
 ```
-### 2019 - 0 / 50
+### 2019 - 6 / 50
 ```
-	Not Attempted: 25
+	Solved: 3
+	Not Attempted: 22
 ```
-### 2020 - 0 / 50
+### 2020 - 4 / 50
 ```
-	Not Attempted: 25
+	Solved: 2
+	Not Attempted: 23
 ```
-### 2021 - 40 / 50
+### 2021 - 42 / 50
 ```
-	Solved: 20
-	Not Attempted: 5
+	Solved: 21
+	Not Attempted: 4
 ```
-Total stars: 135/350
+Total stars: 149/350
