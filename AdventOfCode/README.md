@@ -21,19 +21,21 @@
 	Solved: 4
 	Not Attempted: 21
 ```
-### 2019 - 6 / 50
+### 2019 - 9 / 50
 ```
-	Solved: 3
-	Not Attempted: 22
+	Solved: 4
+	Part 2 Remains: 1
+	Not Attempted: 20
 ```
-### 2020 - 4 / 50
+### 2020 - 12 / 50
 ```
-	Solved: 2
-	Not Attempted: 23
+	Solved: 6
+	Not Attempted: 19
 ```
-### 2021 - 42 / 50
+### 2021 - 43 / 50
 ```
 	Solved: 21
-	Not Attempted: 4
+	Part 2 Remains: 1
+	Not Attempted: 3
 ```
-Total stars: 149/350
+Total stars: 161/350

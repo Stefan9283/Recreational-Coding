@@ -23,17 +23,12 @@ class Cube:
         for c1, c2 in zip(vec1, vec2):
             maxV.append(max(c1, c2))
         return tuple(maxV)
-    def isInside(self, Vec: tuple):
-        return \
-                Vec[0] in range(self.minVec[0] + 1, self.maxVec[0]) and \
-                Vec[1] in range(self.minVec[1] + 1, self.maxVec[1]) and \
-                Vec[2] in range(self.minVec[2] + 1, self.maxVec[2]) 
-    def isInsideOrOnEdge(self, Vec: tuple[int]):
+    def isInside(self, Vec: tuple[int]):
         return \
                 Vec[0] in range(self.minVec[0], self.maxVec[0] + 1) and \
                 Vec[1] in range(self.minVec[1], self.maxVec[1] + 1) and \
                 Vec[2] in range(self.minVec[2], self.maxVec[2] + 1) 
-    def intersectNotOnEdge(self, c2: Cube) -> Cube:
+    def intersect(self, c2: Cube) -> Cube:
         if self.isInside(c2.minVec):
             return Cube(c2.minVec, Cube.min(self.maxVec, c2.maxVec))
         if self.isInside(c2.maxVec):
@@ -43,42 +38,70 @@ class Cube:
         max_minV = Cube.max(c2.minVec, self.minVec)
         if min_maxV not in [c2.maxVec, self.maxVec] or max_minV not in [c2.minVec, self.minVec]:
             return Cube(max_minV, min_maxV)    
-    def intersect(self, c2: Cube) -> Cube:
-        if self.isInsideOrOnEdge(c2.minVec):
-            return Cube(c2.minVec, Cube.min(self.maxVec, c2.maxVec))
-        if self.isInsideOrOnEdge(c2.maxVec):
-            return Cube(Cube.max(c2.minVec, self.minVec), c2.maxVec)
-        
-        min_maxV = Cube.min(c2.maxVec, self.maxVec)
-        max_minV = Cube.max(c2.minVec, self.minVec)
-        if min_maxV not in [c2.maxVec, self.maxVec] or max_minV not in [c2.minVec, self.minVec]:
-            return Cube(max_minV, min_maxV)    
         
 
     def subdivide(self, c2: Cube) -> list[Cube]:
+        aabbs = []
+        # https://stackoverflow.com/questions/66135217/how-to-subdivide-set-of-overlapping-aabb-into-non-overlapping-set-of-aabbs
+        # https://adventofcode.com/2021/day/22
         # if not c2.intersect(self): return [self]
         # returns a list of non overlapping AABBs that 
         # are inside of self but outside of c2
-        x = sorted([self.minVec[0], c2.minVec[0], self.maxVec[0], c2.maxVec[0]])
-        y = sorted([self.minVec[1], c2.minVec[1], self.maxVec[1], c2.maxVec[1]])
-        z = sorted([self.minVec[2], c2.minVec[2], self.maxVec[2], c2.maxVec[2]])
+        x = [self.minVec[0], self.maxVec[0]]
+        y = [self.minVec[1], self.maxVec[1]]
+        z = [self.minVec[2], self.maxVec[2]]
         
-        print('subdivide', self, x)
-
-        # intervals
-        x_ = [(x[i], x[i+1] - 1) for i in range(3)] + [(x[-1], x[-1])]
-        y_ = [(y[i], y[i+1] - 1) for i in range(3)] + [(y[-1], y[-1])]
-        z_ = [(z[i], z[i+1] - 1) for i in range(3)] + [(z[-1], z[-1])]
-
-        aabbs = []
-        for i in x_:
+        if c2.minVec[0] in range(x[0], x[1] + 1):
+            if c2.minVec[0] in x: x.remove(c2.minVec[0])
+            x.append(c2.minVec[0] - 1)
+            x.append(c2.minVec[0] + 1)
+        if c2.minVec[1] in range(y[0], y[1] + 1):
+            if c2.minVec[1] in y: y.remove(c2.minVec[1])
+            y.append(c2.minVec[1] - 1)
+            y.append(c2.minVec[1] + 1)
+        if c2.minVec[2] in range(z[0], z[1] + 1):
+            if c2.minVec[2] in z: z.remove(c2.minVec[2])
+            z.append(c2.minVec[2] - 1)
+            z.append(c2.minVec[2] + 1)
+            
+        if c2.maxVec[0] in range(x[0], x[1] + 1):
+            if c2.maxVec[0] in x: x.remove(c2.maxVec[0])
+            x.append(c2.maxVec[0] - 1)
+            x.append(c2.maxVec[0] + 1)
+        if c2.maxVec[1] in range(y[0], y[1] + 1):
+            if c2.maxVec[1] in y: y.remove(c2.maxVec[1])
+            y.append(c2.maxVec[1] - 1)
+            y.append(c2.maxVec[1] + 1)
+        if c2.maxVec[2] in range(z[0], z[1] + 1):
+            if c2.maxVec[2] in z: z.remove(c2.maxVec[2])
+            z.append(c2.maxVec[2] - 1)
+            z.append(c2.maxVec[2] + 1)
+        
+        x.sort()
+        y.sort()
+        z.sort()
+        x = list(set(x))
+        y = list(set(y))
+        z = list(set(z))
+            
+        print('subdivide', self, c2)
+        print(x,y,z)
+        for i in range(len(x) - 1):
             print(i)
-            for j in y_:
-                for k in z_:
-                    aabb = Cube((i[0], j[0], k[0]), (i[1], j[1], k[1]))
-                    if aabb.intersect(c2) == None:
-                        print(aabb)
-                        aabbs.append(aabb)
+            tmpy = list(y)
+            for j in range(len(y) - 1):
+                tmpz = list(z)
+                for k in range(len(z) - 1):
+                    aabb = Cube((x[i], y[j], z[i]), (x[i + 1], y[j + 1], z[k + 1]))
+                    print(aabb)
+        #             if aabb.intersect(c2) == None:
+        #                 print(aabb)
+        #                 aabbs.append(aabb)
+                    z[k + 1] += 1
+                z = tmpz
+                y[j + 1] += 1
+            y = tmpy
+            x[i + 1] += 1
         return aabbs
 
 # c1 = Cube((0,0,0),(3,3,3))
