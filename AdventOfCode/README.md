@@ -5,11 +5,11 @@
 	Part 2 Remains: 2
 	Not Attempted: 3
 ```
-### 2016 - 23 / 50
+### 2016 - 27 / 50
 ```
-	Solved: 11
+	Solved: 13
 	Part 2 Remains: 1
-	Not Attempted: 13
+	Not Attempted: 11
 ```
 ### 2017 - 24 / 50
 ```
@@ -21,11 +21,11 @@
 	Solved: 4
 	Not Attempted: 21
 ```
-### 2019 - 9 / 50
+### 2019 - 11 / 50
 ```
-	Solved: 4
+	Solved: 5
 	Part 2 Remains: 1
-	Not Attempted: 20
+	Not Attempted: 19
 ```
 ### 2020 - 12 / 50
 ```
@@ -38,4 +38,9 @@
 	Part 2 Remains: 1
 	Not Attempted: 3
 ```
-Total stars: 161/350
+### 2022 - 10 / 50
+```
+	Solved: 5
+	Not Attempted: 20
+```
+Total stars: 177/400
