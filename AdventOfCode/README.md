@@ -38,9 +38,9 @@
 	Part 2 Remains: 1
 	Not Attempted: 3
 ```
-### 2022 - 10 / 50
+### 2022 - 16 / 50
 ```
-	Solved: 5
-	Not Attempted: 20
+	Solved: 8
+	Not Attempted: 17
 ```
-Total stars: 177/400
+Total stars: 183/400
