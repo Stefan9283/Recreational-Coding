@@ -25,7 +25,9 @@ def printYear(year):
     f.write('```\n')
 
 total_stars = 0
-for year in os.listdir()[:-2]:
+for year in os.listdir():
+    if year .__len__() != 4:
+        continue
     days = [0 for _ in range(25)]
     for day in os.listdir(year):
         toks = day[3:].split()
@@ -39,4 +41,8 @@ for year in os.listdir()[:-2]:
     total_stars += int(sum(years[year]))
 f.write('Total stars: ' + str(total_stars) + '/' + str(years.__len__() * 50) + '\n')    
 
-    
+f.close()
+
+import subprocess
+
+subprocess.call(['cat', 'README.md'])
