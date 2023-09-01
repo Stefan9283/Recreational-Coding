@@ -25,7 +25,7 @@ def printYear(year):
     f.write('```\n')
 
 total_stars = 0
-for year in os.listdir():
+for year in sorted(os.listdir(), reverse=True):
     if year .__len__() != 4:
         continue
     days = [0 for _ in range(25)]

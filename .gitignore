@@ -3,3 +3,6 @@
 AdventOfCode/2018/day6/target/*
 AdventOfCode/2018/day6/.idea/
 
+.idea
+Google-OA.txt
+*.pyc

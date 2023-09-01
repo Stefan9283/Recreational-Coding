@@ -1,46 +1,50 @@
-import re
-import sys
 
-def replacenth(string, sub, wanted, n):
-    where = [m.start() for m in re.finditer(sub, string)][n-1]
-    before = string[:where]
-    after = string[where:]
-    after = after.replace(sub, wanted, 1)
-    newString = before + after
-    return newString
+# vezi https://en.wikipedia.org/wiki/CYK_algorithm
+
+from cProfile import Profile
+import copy
+from pstats import SortKey, Stats
+
+with Profile() as profile:
+    from random import shuffle
+
+
+    lines = open('in').readlines()
+
+    replacements = []
+    for line in lines[:-2]:
+        replacements.append(line.rstrip().split(' => '))
+
+    shuffle(replacements)    
     
-import math
+    
+    molecule = lines[-1].rstrip()
 
-replacements = {}
+    stack = [(molecule, 0)]
+    hit = 1
+    miss = 1
 
-indent = 0
+    visited = set()
+    
+    while stack:
+        molec, depth = stack.pop()
 
-visited = set()
+        # if molec in visited:
+        #     continue
+        # visited.add(molec)
+        
+        new = copy.deepcopy(molec)
+        for repl in replacements:
+            if new.find(repl[1]) != -1:
+                new = new.replace(repl[1], repl[0], 1)
+        if molec != new:
+            stack.append((new, depth + 1))
+        # print(replacements)
+        print(depth, molec)
 
-def findNumSteps(s: str):
-    if s == 'e': return 0
-    if s.find('e') != -1 and s.__len__() != 1: return math.inf
-    if s in visited: return math.inf
-    visited.add(s)
-    global indent
-    minSteps = math.inf
-    # print(''.join(['\t' for _ in range(indent)]), s)
-    for To in replacements:
-        for From in replacements[To]:
-            for i in range(s.count(To)):
-                indent += 1
-                minSteps = min(minSteps, 1 + findNumSteps(replacenth(s, To, From, i)))
-                indent -= 1
-    return minSteps
-
-lines = open('in').readlines()
-
-startMolecule = lines[-1]
-
-
-for rep in lines[:-2]:
-    fst, _, snd = rep.strip('\n').split()
-    if replacements.get(snd) == None: replacements[snd] = []
-    replacements[snd].append(fst)
-
-print(findNumSteps(startMolecule))
+    # (
+    #     Stats(profile)
+    #     .strip_dirs()
+    #     .sort_stats(SortKey.TIME)
+    #     .print_stats()
+    # )
