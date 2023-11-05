@@ -26,15 +26,15 @@ def printYear(year):
 
 total_stars = 0
 for year in sorted(os.listdir(), reverse=True):
-    if year .__len__() != 4:
+    if year.__len__() != 4:
         continue
     days = [0 for _ in range(25)]
     for day in os.listdir(year):
-        toks = day[3:].split()
+        toks = day[3:].split('-')
         id = int(toks[0])
         val = 2
         if len(toks) == 2: val = 0
-        if len(toks) == 4: val = 1
+        if len(toks) == 3: val = 1
         days[id - 1] = val    
     years[year] = days
     printYear(year)
