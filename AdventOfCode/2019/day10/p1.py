@@ -37,12 +37,6 @@ class Line2D:
                 y in range(min(self.y1, self.y2), max(self.y1, self.y2)) and \
                 x in range(min(self.x1, self.x2), max(self.x1, self.x2))
         
-        
- 
-
-
-
-
 
 def check_line_of_sight(pos1: Point2D, pos2: Point2D) -> bool:
     global map
@@ -68,7 +62,6 @@ def get_observable_asteroids(pos: Point2D) -> int:
     return visible
 
 
-
 map = []
 
 with open('in') as f:
@@ -84,11 +77,14 @@ for i in range(len(map)):
     row = []
     for j in range(len(map[0])):
         if map[i][j] == '.': 
-            row.append('.')
+            row.append(' . ')
             continue
         ast_count = get_observable_asteroids(Point2D(i, j))
         row.append(str(ast_count))
-        max_count = max(max_count, ast_count)  
+        if ast_count >= max_count:
+            max_count = ast_count
+            print(i, j, max_count)
+              
     res_map.append(row)
 
 print('\n'.join(' '.join(line) for line in res_map))    
