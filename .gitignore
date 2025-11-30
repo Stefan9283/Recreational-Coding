@@ -1,11 +1,4 @@
 target
 .idea
 venv
-Google-OA.txt
 *.pyc
-
-
-/target
-*-TODO*
-Lua
-Go
