@@ -1,8 +1,9 @@
 ## Advent of Code - Personal Stats
-### 2023 - 8 / 50
+### 2023 - 30 / 50
 ```
-	Solved: 4
-	Not Attempted: 21
+	Solved: 14
+	Part 2 Remains: 2
+	Not Attempted: 9
 ```
 ### 2022 - 20 / 50
 ```
@@ -15,10 +16,11 @@
 	Part 2 Remains: 1
 	Not Attempted: 3
 ```
-### 2020 - 18 / 50
+### 2020 - 29 / 50
 ```
-	Solved: 9
-	Not Attempted: 16
+	Solved: 14
+	Part 2 Remains: 1
+	Not Attempted: 10
 ```
 ### 2019 - 18 / 50
 ```
@@ -31,10 +33,10 @@
 	Part 2 Remains: 1
 	Not Attempted: 14
 ```
-### 2017 - 24 / 50
+### 2017 - 28 / 50
 ```
-	Solved: 12
-	Not Attempted: 13
+	Solved: 14
+	Not Attempted: 11
 ```
 ### 2016 - 29 / 50
 ```
@@ -48,4 +50,4 @@
 	Part 2 Remains: 2
 	Not Attempted: 2
 ```
-Total stars: 225/450
+Total stars: 262/450

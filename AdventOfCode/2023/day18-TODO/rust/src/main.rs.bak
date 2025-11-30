@@ -1,0 +1,181 @@
+use std::collections::HashSet;
+use std::fs;
+use std::str::FromStr;
+
+fn get_inside_count(
+    pos: (i32, i32),
+    edge: &HashSet<(i32, i32)>,
+    min: &(i32, i32),
+    max: &(i32, i32),
+    inside: &mut HashSet<(i32, i32)>,
+) -> Option<usize> {
+    let mut stack: Vec<(i32, i32)> = vec![];
+    stack.push(pos);
+
+    let mut visited: HashSet<(i32, i32)> = HashSet::new();
+
+    let rectangle_area = max.0.abs_diff(min.0) * max.1.abs_diff(min.1);
+
+    while !stack.is_empty() {
+        // println!(
+        //     "{:?}",
+        //     (
+        //         visited.len(),
+        //         max.0.abs_diff(min.0),
+        //         max.1.abs_diff(min.1),
+        //         rectangle_area,
+        //         min,
+        //         max
+        //     )
+        // );
+        if visited.len() > rectangle_area as usize {
+            return None;
+        }
+
+        let current = stack.pop().unwrap();
+
+        if inside.contains(&current) {
+            return None;
+        }
+
+        visited.insert(current.clone());
+
+        let left = (current.0 - 1, current.1);
+        let right = (current.0 + 1, current.1);
+        let top = (current.0, current.1 - 1);
+        let bottom = (current.0, current.1 + 1);
+
+        for neigh in vec![left, right, top, bottom] {
+            if visited.contains(&neigh) || edge.contains(&neigh) {
+                continue;
+            }
+            stack.push(neigh)
+        }
+    }
+
+    inside.extend(visited.iter());
+    return Some(visited.len());
+}
+
+enum Part {
+    Part1, Part2
+}
+
+#[derive(Debug)]
+enum Direction {
+    Up, Down, Left, Right
+}
+
+impl Direction {
+    fn from_str(s: &str) -> Option<Direction> {
+        if s == "U" {
+            return Some(Direction::Up);
+        }
+        if s == "D" {
+            return Some(Direction::Down);
+        }
+        if s == "L" {
+            return Some(Direction::Left);
+        }
+        if s == "R" {
+            return Some(Direction::Right);
+        }
+        return None;
+    }
+}
+
+
+
+fn get_edge(filename: &str, part: Part) -> HashSet<(i32, i32)> {
+    let content = fs::read_to_string("in").expect("Should be able to read the input from file");
+    let lines = content.split("\n").collect::<Vec<&str>>();
+    let mut edge: HashSet<(i32, i32)> = HashSet::new();
+    let mut pos = (0, 0);
+    for line in lines {
+        let tokens = line.split(" ").collect::<Vec<&str>>();
+        let dir = tokens[0].chars().collect::<Vec<char>>()[0];
+        let steps = i32::from_str(tokens[1]).unwrap();
+        let mut hex = tokens[2];
+        hex = &hex[1..hex.len() - 1];
+        // println!("{:?}", (dir, steps, color));
+        let old_pos = pos.clone();
+        for i in 1..steps + 1 {
+            let mut _pos = old_pos.clone();
+            match dir {
+                'U' => {
+                    _pos = (_pos.0, _pos.1 + i);
+                }
+                'D' => {
+                    _pos = (_pos.0, _pos.1 - i);
+                }
+                'L' => {
+                    _pos = (_pos.0 - i, _pos.1);
+                }
+                'R' => {
+                    _pos = (_pos.0 + i, _pos.1);
+                }
+                _ => {}
+            }
+            pos = _pos.clone();
+            // println!("{:?}", pos);
+            edge.insert(pos);
+        }
+    }
+    return edge;
+}
+
+
+fn part1() {
+    let edge = get_edge("in", Part::Part1);
+    
+    // println!("{:?}", edge);
+    let min = (
+        edge.iter().map(|x| x.0).min().unwrap(),
+        edge.iter().map(|x| x.1).min().unwrap(),
+    );
+    let max = (
+        edge.iter().map(|x| x.0).max().unwrap(),
+        edge.iter().map(|x| x.1).max().unwrap(),
+    );
+    let mut sorted_edges = edge.iter().map(|x| (x.0, x.1)).collect::<Vec<(i32, i32)>>();
+    sorted_edges.sort();
+    // check from the leftmost parts of the edge to the rightmost ones
+    // if the next to the right cell is inside of the contour. If it is
+    // then the 'get_inside_count' function will return the number of visited cells
+    {
+        let mut inside_cells = HashSet::new();
+        for (x, y) in sorted_edges {
+            if !edge.contains(&(x + 1, y)) {
+                let area = get_inside_count((x + 1, y), &edge, &min, &max, &mut inside_cells);
+                if area.is_some() {
+                    break;
+                }
+            }
+        }
+        println!("{:?}", inside_cells.len() + edge.len())
+    }
+}
+
+fn read_input(filename: &str) {
+    let content = fs::read_to_string(filename).unwrap();
+    for line in content.split("\n") {
+        let tokens = line.split(" ").collect::<Vec<&str>>();
+
+        let dir = Direction::from_str(tokens[0]).unwrap();
+        let steps = i32::from_str(tokens[1]).unwrap();
+        let hex = tokens[2].chars().collect::<Vec<char>>()[1..tokens[2].len() - 2].iter().map(|x| *x).collect::<String>();
+        println!("{:?}", (dir, steps, hex));
+    }
+}
+
+fn main() {
+    // insufficient, the right solution should include some 
+    // sort of splitting the shape into simpler objects such as:
+    // - bounding boxes
+    // - columns
+    // - rows
+    // for which we can easily compute "the area"
+    // part1()
+    let boxes = read_input("in");
+    println!("{:?}", boxes);
+}

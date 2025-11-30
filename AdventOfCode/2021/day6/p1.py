@@ -1,4 +1,4 @@
-from typing import List, overload
+from typing import List
 
 file1 = open('in0', 'r')
 Lines = file1.readlines()
